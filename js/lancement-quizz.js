@@ -12,10 +12,13 @@ getThemes()
     .catch(error => console.log(error))
 
 document.getElementById("questionQuizz").style.display = "none"
+document.getElementById("btnChargementQuizz").style.display = "none"
 document.getElementById("btnTerminer").style.display = "none"
 
 // LANCEMENT DU QUIZZ
 document.querySelector("#btnLancerQuizz").addEventListener("click", () => {
+    document.getElementById("btnChargementQuizz").style.display = ""
+    document.getElementById("btnLancerQuizz").style.display = "none"
     numQuestion = 0
     nbMaxQuestion = document.getElementById("nbQuestion").value
     slugTheme  = document.getElementById("listeTheme").value

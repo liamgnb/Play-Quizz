@@ -28,7 +28,6 @@ const selectReponse = (numReponse, numQuestion) => {
     historiqueJoueur[`Q${numQuestion+1}`] = numReponse
     unselectReponse()
     document.getElementById(`btnReponse_${numReponse}`).className = 'btn btn-link text-primary text-decoration-none d-flex'
-    console.log(historiqueJoueur)
 }
 
 const unselectReponse = () => {
