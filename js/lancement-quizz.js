@@ -83,9 +83,6 @@ document.querySelector("#btnDetail").addEventListener("click", () => {
     document.getElementById("btnChargementDetail").style.display = ""
     document.getElementById("btnDetail").style.display = "none"
     detailQuizz()
-})
-
-document.querySelector("#btnSortir").addEventListener("click", () => {
-    console.log("lik")
-    changeMode("resultat")
+    document.getElementById("btnChargementDetail").style.display = "none"
+    document.getElementById("btnDetail").style.display = ""
 })

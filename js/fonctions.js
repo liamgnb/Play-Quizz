@@ -7,12 +7,14 @@ let historiqueJoueur = []
  * Passage du menu, au quizz et aux réponses
  */
 const changeMode = (mode) => {
-    document.getElementById("row_body").className = "row justify-content-md-center position-absolute top-50 start-50 translate-middle"
-    document.getElementById("chargement").style.display = "none"
-    document.getElementById("paramQuizz").style.display = "none"
-    document.getElementById("resultatQuizz").style.display = "none"
-    document.getElementById("questionQuizz").style.display = "none"
-    document.getElementById("detailQuizz").style.display = "none"
+    if (mode !== "menu") {
+        document.getElementById("row_body").className = "row justify-content-md-center position-absolute top-50 start-50 translate-middle"
+        document.getElementById("chargement").style.display = "none"
+        document.getElementById("paramQuizz").style.display = "none"
+        document.getElementById("resultatQuizz").style.display = "none"
+        document.getElementById("questionQuizz").style.display = "none"
+        document.getElementById("detailQuizz").style.display = "none"
+    }
     switch (mode) {
         case "param" :
             document.getElementById("paramQuizz").style.display = ""
@@ -136,6 +138,10 @@ const detailQuizz = () => {
     let question
     let noReponse
 
+    if (document.querySelectorAll('#bodyDetail').length > 0) document.querySelectorAll('#bodyDetail').forEach(e => {document.getElementById(e.id).remove()})
+    if (document.querySelectorAll('#btnSortir').length > 0) document.querySelectorAll('#btnSortir').forEach(e => {document.getElementById(e.id).remove()})
+    if (document.querySelectorAll('#barre').length > 0) document.querySelectorAll('#barre').forEach(e => {document.getElementById(e.id).remove()})
+
     for (const noQuestion in questions) {
         for (let i = 0; i < 4; i++) {
            document.getElementById(`div_detail_reponse_${i+1}`).className = 'text-black d-flex my-1'
@@ -153,20 +159,27 @@ const detailQuizz = () => {
             if(question.reponses[i].estCorrecte) document.getElementById(`div_detail_reponse_${i+1}`).className = 'text-success d-flex my-1'
         }
 
-        let body = document.getElementById('bodyDetail').cloneNode(true);
+        let body = document.getElementById('bodyDetailPourCopie').cloneNode(true);
         body.style.display = ""
+        body.id = "bodyDetail"
         document.querySelector("#detailQuizz").appendChild(body)
 
         if (parseInt(noQuestion) >= 0 && parseInt(noQuestion) < nbrQuestions-1) {
-            let barre = document.getElementById('barre').cloneNode()
+            let barre = document.getElementById('barrePourCopie').cloneNode()
             barre.style.display = ""
+            barre.id = "barre"
             document.querySelector("#detailQuizz").appendChild(barre)
         }
 
         if (parseInt(noQuestion) === nbrQuestions-1) {
-            let btn = document.getElementById('btnSortir').cloneNode(true)
+            let btn = document.getElementById('btnSortirPourCopie').cloneNode(true)
             btn.style.display = ""
+            btn.id = "btnSortir"
             document.querySelector("#detailQuizz").appendChild(btn)
+            document.querySelector("#btnSortir").addEventListener("click", () => {
+                changeMode("resultat")
+                verifQuizz()
+            })
         }
 
     }
