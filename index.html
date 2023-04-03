@@ -19,9 +19,8 @@
 <body>
     <canvas id="confetti-canvas"></canvas>
     <div class="container">
-        <div class="row justify-content-md-center position-absolute top-50 start-50 translate-middle">
+        <div class="row justify-content-md-center position-absolute top-50 start-50 translate-middle" id="row_body">
             <div class="col-md-auto">
-
                 <!-- Chargement paramètres Quizz -->
                 <div class="modal-content rounded-4 shadow"  id="chargement">
                     <div class="spinner-grow text-info m-5" role="status" style="width: 10rem; height: 10rem;">
@@ -151,12 +150,16 @@
                 </div>
 
                 <!-- Details -->
-                <div class="modal-content rounded-4 shadow mb-4"  id="detailQuizz" style="width: 30em; display: none">
-                    <div class="modal-body p-5" id="bodyDetail" style="display: none">
-                        <div class="d-flex justify-content-between">
-                            <h2 class="fw-bold mb-0" id="libelleThemeDetail">theme</h2>
-                        </div>
-                        <ul class="d-flex flex-column mb-2 mt-2 list-unstyled">
+                <div class="modal-content rounded-4 shadow mb-0"  id="detailQuizz" style="width: 30em; display: none">
+                    <div class="modal-body">
+                        <ul class="d-flex flex-column mb-0 mt-2 list-unstyled">
+                            <div class="d-flex justify-content-center">
+                                <h2 class="fw-bold" id="libelleThemeDetail">theme</h2>
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="modal-body px-5 py-2" id="bodyDetail" style="display: none">
+                        <ul class="d-flex flex-column mb-2 mt-0 list-unstyled">
                             <li class="d-flex justify-content-center">
                                 <h5 class="my-auto ms-2" id="questionDetail">
                                     <strong><span id="noQuestionDetail" class="fs-3">0</span></strong>
@@ -200,10 +203,10 @@
                                 </div>
                             </li>
                         </ul>
-                        <hr class="border border-success border-2 opacity-50" style="display: none" id="barre">
+                        <hr class="border border-success border-2 opacity-50 mt-0" style="display: none" id="barre">
                     </div>
+                    <button type="button" class="btn btn-lg btn-outline-warning w-75 mt-1" data-bs-dismiss="modal" id="btnSortir" style="display: none">Sortir</button>
                 </div>
-                <button type="button" class="btn btn-lg btn-outline-warning mt-1 w-100" data-bs-dismiss="modal" id="btnSortir" style="display: none">Sortir</button>
             </div>
         </div>
     </div>

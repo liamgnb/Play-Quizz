@@ -12,7 +12,7 @@ getThemes()
     .catch(error => console.log(error))
 
 // LANCEMENT DU QUIZZ
-document.querySelector("#btnLancerQuizz").addEventListener("click", () => {
+document.querySelector("#btnLancerQuizz,#btnChargementQuizz").addEventListener("click", () => {
     document.getElementById("btnChargementQuizz").style.display = ""
     document.getElementById("btnLancerQuizz").style.display = "none"
     numQuestion = 0
@@ -83,4 +83,9 @@ document.querySelector("#btnDetail").addEventListener("click", () => {
     document.getElementById("btnChargementDetail").style.display = ""
     document.getElementById("btnDetail").style.display = "none"
     detailQuizz()
+})
+
+document.querySelector("#btnSortir").addEventListener("click", () => {
+    console.log("lik")
+    changeMode("resultat")
 })

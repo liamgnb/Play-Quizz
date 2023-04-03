@@ -7,6 +7,7 @@ let historiqueJoueur = []
  * Passage du menu, au quizz et aux réponses
  */
 const changeMode = (mode) => {
+    document.getElementById("row_body").className = "row justify-content-md-center position-absolute top-50 start-50 translate-middle"
     document.getElementById("chargement").style.display = "none"
     document.getElementById("paramQuizz").style.display = "none"
     document.getElementById("resultatQuizz").style.display = "none"
@@ -127,18 +128,23 @@ const verifQuizz = () => {
         if (question.reponses[noReponse].estCorrecte) score ++
     }
     document.getElementById("note").innerText = `${score} / ${nbrQuestions}`
-    if ((score * 100 / nbrQuestions) >= 75) lancerConfetti()
+    if ((nbrQuestions - score) <= Math.floor(nbrQuestions * 0.75)) lancerConfetti()
 }
 
 const detailQuizz = () => {
     let nbrQuestions = questions.length
     let question
     let noReponse
-    for (const noQuestion in questions) {
-        question = questions[noQuestion]
-        noReponse = historiqueJoueur[noQuestion] - 1
 
-        document.getElementById("noQuestionDetail").innerText = ( noQuestion + 1 ) + ' - '
+    for (const noQuestion in questions) {
+        for (let i = 0; i < 4; i++) {
+           document.getElementById(`div_detail_reponse_${i+1}`).className = 'text-black d-flex my-1'
+        }
+
+        question = questions[parseInt(noQuestion)]
+        noReponse = historiqueJoueur[parseInt(noQuestion)] - 1
+
+        document.getElementById("noQuestionDetail").innerText = ( parseInt(noQuestion) + 1 ) + ' - '
         document.getElementById("libelleQuestionDetail").innerText = question.libelle
 
         for (let i = 0; i < question.reponses.length; i++) {
@@ -146,19 +152,31 @@ const detailQuizz = () => {
             if(i === noReponse) document.getElementById(`div_detail_reponse_${i+1}`).className = 'text-danger d-flex my-1'
             if(question.reponses[i].estCorrecte) document.getElementById(`div_detail_reponse_${i+1}`).className = 'text-success d-flex my-1'
         }
-        if (noQuestion >= 0 && noQuestion < nbrQuestions-1) {
+
+        let body = document.getElementById('bodyDetail').cloneNode(true);
+        body.style.display = ""
+        document.querySelector("#detailQuizz").appendChild(body)
+
+        if (parseInt(noQuestion) >= 0 && parseInt(noQuestion) < nbrQuestions-1) {
             let barre = document.getElementById('barre').cloneNode()
             barre.style.display = ""
-            document.querySelector("#bodyDetail").appendChild(barre)
+            document.querySelector("#detailQuizz").appendChild(barre)
         }
 
-
-        let modal = document.getElementById('bodyDetail').cloneNode(true);
-        modal.style.display = ""
-        document.querySelector("#detailQuizz").appendChild(modal)
+        if (parseInt(noQuestion) === nbrQuestions-1) {
+            let btn = document.getElementById('btnSortir').cloneNode(true)
+            btn.style.display = ""
+            document.querySelector("#detailQuizz").appendChild(btn)
+        }
 
     }
+
     changeMode("detail")
+
+    if(nbrQuestions>=3) {
+        document.getElementById("row_body").className = 'row justify-content-md-center my-5'
+    }
+
 }
 
 export {changeMode, changeBouton, initListeThemes, initTheme, initQuestions, play, selectReponse, verifSelect, verifQuizz, detailQuizz}
