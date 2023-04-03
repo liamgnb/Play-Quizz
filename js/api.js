@@ -1,7 +1,9 @@
 // API
 
+const url = 'http://127.0.0.1:8000'
+
 const getThemes = () => {
-    return fetch('http://127.0.0.1:8000/api/quizz')
+    return fetch(`${url}/api/quizz`)
         .then( response => {
             if (response.ok) {
                 return response.json()
@@ -11,7 +13,7 @@ const getThemes = () => {
 }
 
 const getTheme = slugTheme => {
-    return fetch(`http://127.0.0.1:8000/api/quizz?theme=${slugTheme}`)
+    return fetch(`${url}/api/quizz?theme=${slugTheme}`)
         .then( response => {
             if (response.ok) {
                 return response.json()
@@ -21,7 +23,7 @@ const getTheme = slugTheme => {
 }
 
 const getQuestions = (slugTheme, nbQuestion) => {
-    return fetch(`http://127.0.0.1:8000/api/quizz/aleatoire?theme=${slugTheme}&nb=${nbQuestion}`)
+    return fetch(`${url}/api/quizz/aleatoire?theme=${slugTheme}&nb=${nbQuestion}`)
         .then( response => {
             if (response.ok) {
                 return response.json()
@@ -29,5 +31,6 @@ const getQuestions = (slugTheme, nbQuestion) => {
             throw new Error("Erreur : Vérifier votre endPoint")
         })
 }
+
 
 export {getThemes, getQuestions, getTheme}

@@ -1,6 +1,6 @@
 // VARIABLES
 import {getThemes, getTheme, getQuestions} from "./api.js";
-import {changeMode, changeBouton, initListeThemes, initTheme, initQuestions, play, selectReponse} from "./fonctions.js";
+import {changeMode, changeBouton, initListeThemes, initTheme, initQuestions, play, selectReponse, verifSelect, verifQuizz, detailQuizz} from "./fonctions.js";
 
 let nbMaxQuestion
 let slugTheme
@@ -10,10 +10,6 @@ let numQuestion
 getThemes()
     .then(result => initListeThemes(result))
     .catch(error => console.log(error))
-
-document.getElementById("questionQuizz").style.display = "none"
-document.getElementById("btnChargementQuizz").style.display = "none"
-document.getElementById("btnTerminer").style.display = "none"
 
 // LANCEMENT DU QUIZZ
 document.querySelector("#btnLancerQuizz").addEventListener("click", () => {
@@ -35,15 +31,32 @@ document.querySelector("#btnLancerQuizz").addEventListener("click", () => {
 
 // CHANGEMENT DE QUESTION
 document.querySelector("#btnSuivant").addEventListener("click", () => {
-    numQuestion ++
-    play(numQuestion)
-    if (numQuestion >= nbMaxQuestion - 1) {
-        changeBouton()
+    if (verifSelect()) {
+        numQuestion ++
+        play(numQuestion)
+        if (numQuestion >= nbMaxQuestion - 1) {
+            changeBouton()
+        }
+    } else {
+        document.getElementById("erreur").style.display = ""
+        document.getElementById("erreur").innerText = "Veuillez sélectionner une proposition."
     }
 })
 
+// FIN QUIZZ
+document.querySelector("#btnTerminer").addEventListener("click", () => {
+    if (verifSelect()) {
+        verifQuizz()
+        changeMode("resultat")
+    } else {
+        document.getElementById("erreur").style.display = ""
+        document.getElementById("erreur").innerText = "Veuillez sélectionner une proposition."
+    }
+})
+
+// ACTION BOUTONS
 document.querySelector("#btnClose").addEventListener("click", () => {
-    changeMode()
+    changeMode("menu")
 })
 
 document.querySelector("#btnReponse_1").addEventListener("click", () => {
@@ -62,13 +75,12 @@ document.querySelector("#btnReponse_4").addEventListener("click", () => {
     selectReponse(4, numQuestion)
 })
 
+document.querySelector("#btnMenu").addEventListener("click", () => {
+    changeMode("menu")
+})
 
-
-
-
-
-
-
-
-// empecher le reload
-// erreur a affciher de l'API
+document.querySelector("#btnDetail").addEventListener("click", () => {
+    document.getElementById("btnChargementDetail").style.display = ""
+    document.getElementById("btnDetail").style.display = "none"
+    detailQuizz()
+})
