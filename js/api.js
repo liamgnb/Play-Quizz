@@ -8,9 +8,8 @@ const url = 'https://www.api-l2r.liam-genebrier.fr'
  */
 const getThemes = () => {
     return fetch(`${url}/api/quizz`, {
-        method: 'GET',
-        mode: 'no-cors'}
-    )
+        method: 'GET'}
+        )
         .then( response => {return response.json()
         })
 }
