@@ -7,10 +7,7 @@ const url = 'https://www.api-l2r.liam-genebrier.fr'
  * @returns {Promise<any>}
  */
 const getThemes = () => {
-    return fetch(`${url}/api/quizz`, {
-            method: 'GET',
-            mode: 'no-cors'}
-        )
+    return fetch(`${url}/api/quizz`)
         .then( response => {return response.json()
         })
 }
