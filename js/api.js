@@ -11,7 +11,8 @@ const getThemes = () => {
             method: 'GET',
             mode: 'cors',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
             }}
         )
         .then( response => {return response.json()
