@@ -40,6 +40,10 @@ const changeMode = (mode) => {
     }
 }
 
+/**
+ * Changement du bouton lors du changement de question
+ * Pour passer du bouton "suivant" au bouton "terminer"
+ */
 const changeBouton = () => {
     if (document.getElementById("btnSuivant").style.display !== "none") {
         document.getElementById("btnSuivant").style.display = "none"
@@ -47,18 +51,31 @@ const changeBouton = () => {
     }
 }
 
+/**
+ * Met en bleu une question sélectionné
+ * @param numReponse
+ * @param numQuestion
+ */
 const selectReponse = (numReponse, numQuestion) => {
     historiqueJoueur[numQuestion] = numReponse
     unselectReponse()
     document.getElementById(`btnReponse_${numReponse}`).className = 'btn btn-link text-primary text-decoration-none d-flex'
 }
 
+/**
+ * Met en noir toute les questions
+ */
 const unselectReponse = () => {
     for (let i = 1; i <=4 ; i++) {
         document.getElementById(`btnReponse_${i}`).className = 'btn btn-link text-black text-decoration-none d-flex'
     }
 }
 
+/**
+ * Fonction de callback
+ * Initialise la liste déroulante des thèmes à l'aide de la réponse de l'API
+ * @param themesAPI
+ */
 const initListeThemes = themesAPI => {
     for (const theme of themesAPI) {
         const listeTheme = document.getElementById('listeTheme')
@@ -70,22 +87,48 @@ const initListeThemes = themesAPI => {
     changeMode("param")
 }
 
+/**
+ * Fonction de callback
+ * Initialise le libellé du thème choisi à l'aide de la réponse de l'API
+ * @param themeAPI
+ */
 const initTheme = themeAPI => {
     document.getElementById("libelleThemeQuestion").innerText = themeAPI.libelle
     document.getElementById("libelleThemeResultat").innerText = themeAPI.libelle
     document.getElementById("libelleThemeDetail").innerText = themeAPI.libelle
 }
 
+/**
+ * Melange le tableau de questions passé en paramètre
+ * @param questions
+ */
 const melangeQuestions = questions => {
     questions.sort(()=> Math.random() - 0.5);
 }
 
+/**
+ * Fonction de callback
+ * Initialise le tableau de questions à afficher à l'aide de la réponse de l'API
+ * @param questionsAPI
+ */
 const initQuestions = questionsAPI => {
-    questions = questionsAPI
-    changeMode("quizz")
-    play(0)
+    if (!questionsAPI.status) {
+        questions = questionsAPI
+        changeMode("quizz")
+        play(0)
+    } else {
+        document.getElementById("erreurParam").innerText = questionsAPI.message
+        document.getElementById("erreurParam").style.display = ""
+        document.getElementById("btnChargementQuizz").style.display = "none"
+        document.getElementById("btnLancerQuizz").style.display = ""
+    }
+
 }
 
+/**
+ * Affiche une question dont le numéro à été passé en paramètre
+ * @param numQuestion
+ */
 const play = (numQuestion) => {
     document.getElementById("erreur").style.display = "none"
     document.getElementById("erreur").innerText = ""
@@ -100,6 +143,10 @@ const play = (numQuestion) => {
     }
 }
 
+/**
+ * Renvoie 'true' si une question est sélectionné
+ * @returns {boolean}
+ */
 const verifSelect = () => {
     for (let i = 1; i <= 4 ; i++) {
         if  (document.getElementById(`btnReponse_${i}`).className === 'btn btn-link text-primary text-decoration-none d-flex') return true
@@ -107,6 +154,9 @@ const verifSelect = () => {
     return false
 }
 
+/**
+ * Affiche les confettis
+ */
 const lancerConfetti = () => {
     const canvas = document.querySelector('#confetti-canvas');
     var myConfetti = confetti.create(canvas, {
@@ -119,6 +169,9 @@ const lancerConfetti = () => {
     });
 }
 
+/**
+ *
+ */
 const verifQuizz = () => {
     let nbrQuestions = questions.length
     let score = 0
@@ -130,7 +183,7 @@ const verifQuizz = () => {
         if (question.reponses[noReponse].estCorrecte) score ++
     }
     document.getElementById("note").innerText = `${score} / ${nbrQuestions}`
-    if ((nbrQuestions - score) <= Math.floor(nbrQuestions * 0.75)) lancerConfetti()
+    if (score > Math.floor(nbrQuestions * 0.75)) lancerConfetti()
 }
 
 const detailQuizz = () => {
