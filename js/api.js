@@ -1,13 +1,14 @@
 // API
 
-const url = 'https://www.api-l2r.liam-genebrier.fr'
+//const url = 'http://127.0.0.1:8000'
+const url = 'https://api-l2r.liam-genebrier.fr'
 
 /**
  * Récupère les thèmes depuis l'API
  * @returns {Promise<any>}
  */
 const getThemes = () => {
-    return fetch(`${url}/api/quizz`)
+    return fetch(`${url}/api/quizz/themes`)
         .then( response => {return response.json()
         })
 }
