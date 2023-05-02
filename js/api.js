@@ -19,7 +19,7 @@ const getThemes = () => {
  * @returns {Promise<any>}
  */
 const getTheme = slugTheme => {
-    return fetch(`${url}/api/quizz?theme=${slugTheme}`)
+    return fetch(`${url}/api/quizz/themes?theme=${slugTheme}`)
         .then( response => {
             return response.json()
         })
