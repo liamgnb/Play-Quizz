@@ -1,13 +1,13 @@
 // API
 
-const url = 'https://www.api-l2r.liam-genebrier.fr'
+const url = 'http://localwin:8000'
 
 /**
  * Récupère les thèmes depuis l'API
  * @returns {Promise<any>}
  */
 const getThemes = () => {
-    return fetch(`${url}/api/quizz`)
+    return fetch(`${url}/api/quizz/themes`)
         .then( response => {return response.json()
         })
 }
@@ -18,7 +18,7 @@ const getThemes = () => {
  * @returns {Promise<any>}
  */
 const getTheme = slugTheme => {
-    return fetch(`${url}/api/quizz?theme=${slugTheme}`)
+    return fetch(`${url}/api/quizz/themes?theme=${slugTheme}`)
         .then( response => {
             return response.json()
         })
